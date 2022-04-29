@@ -19,3 +19,8 @@ On your terminal, simply go to the project's folder and run:
 ```
 npm start
 ```
+
+## How to test
+```
+npm test
+```

@@ -1,6 +1,6 @@
 const readline = require('readline');
 
-const interface = readline.createInterface({
+const io = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
@@ -19,11 +19,11 @@ const stack = [];
 console.log('CLI RPN Calculator\n')
 
 function main() {
-  interface.question('> ', arg => {
+  io.question('> ', arg => {
     const input = arg.trim();
 
     if (input === 'q') {
-      return interface.close();
+      return io.close();
     }
 
     const result = calculate(input);
@@ -68,3 +68,7 @@ function validateInput(input) {
 }
 
 main();
+
+module.exports = {
+  calculate
+};
