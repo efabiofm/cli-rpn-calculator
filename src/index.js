@@ -26,39 +26,41 @@ function main() {
       return interface.close();
     }
 
-    const isInputValid = validateInput(input)
-    if (isInputValid) {
-      const chars = input.split(' ');
-  
-      for (let char of chars) {
-        if (operators.includes(char)) {
-          if (stack.length > 1) {
-            const y = parseFloat(stack.pop());
-            const x = parseFloat(stack.pop());
-            const result = calculator[char](x, y);
-            stack.push(result);
-          } else {
-            console.error('\x1b[31mInsufficient numbers\x1b[0m');
-            return main();
-          }
-        } else {
-          stack.push(parseFloat(char));
-        }
-      }
-  
-      if (chars.length === 1 && !operators.includes(input)) {
-        console.log(input);
-      } else {
-        const output = stack[stack.length - 1];
-        console.log(output);
-      }
-
-      main();
-    } else {
-      console.error('\x1b[31mInvalid input\x1b[0m');
-      main();
-    }
+    const result = calculate(input);
+    console.log(result);
+    main();
   });
+}
+
+function calculate(input) {
+  const isInputValid = validateInput(input)
+  if (isInputValid) {
+    const chars = input.split(' ');
+
+    for (let char of chars) {
+      if (operators.includes(char)) {
+        if (stack.length > 1) {
+          const y = parseFloat(stack.pop());
+          const x = parseFloat(stack.pop());
+          const result = calculator[char](x, y);
+          stack.push(result);
+        } else {
+          return '\x1b[31mInsufficient numbers\x1b[0m';
+        }
+      } else {
+        stack.push(parseFloat(char));
+      }
+    }
+
+    if (chars.length === 1 && !operators.includes(input)) {
+      return input;
+    } else {
+      const output = stack[stack.length - 1];
+      return output;
+    }
+  } else {
+    return '\x1b[31mInvalid input\x1b[0m';
+  }
 }
 
 function validateInput(input) {
